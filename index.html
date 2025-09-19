@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผนผังความคิด: การแก้ไขปัญหาชายแดนไทย-กัมพูชา</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .mindmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .solution-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .solution-card:hover::before {
+            left: 100%;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .card-icon.diplomatic { background: linear-gradient(135deg, #3742fa, #2f3542); }
+        .card-icon.economic { background: linear-gradient(135deg, #2ed573, #1e90ff); }
+        .card-icon.social { background: linear-gradient(135deg, #ffa502, #ff6348); }
+        .card-icon.technical { background: linear-gradient(135deg, #5352ed, #3742fa); }
+        .card-icon.legal { background: linear-gradient(135deg, #ff4757, #c44569); }
+        .card-icon.sustainable { background: linear-gradient(135deg, #2ed573, #7bed9f); }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .card-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .card-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .solution-list {
+            list-style: none;
+        }
+
+        .solution-list li {
+            margin: 12px 0;
+            padding: 10px 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .solution-list li:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateX(5px);
+        }
+
+        .solution-list li strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .timeline {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .timeline h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .timeline-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .timeline-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-item h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .timeline-item li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .timeline-item li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2ed573;
+            font-weight: bold;
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .mindmap {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ แผนผังความคิด</h1>
+            <p>การแก้ไขปัญหาชายแดนไทย-กัมพูชา</p>
+        </div>
+
+        <div class="mindmap">
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon diplomatic">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขทางการทูต</div>
+                        <div class="card-subtitle">Diplomatic Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>🤝 การเจรจาระดับสูง</strong>
+                            การประชุมสุดยอดผู้นำ, ใช้องค์การระหว่างประเทศเป็นคนกลาง, สร้างข้อตกลงที่ยั่งยืน
+                        </li>
+                        <li>
+                            <strong>📋 การทบทวนเขตแดน</strong>
+                            สำรวจเขตแดนด้วยเทคโนโลジี, จัดทำแผนที่ชัดเจน, ตั้งคณะกรรมการร่วม
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon economic">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขทางเศรษฐกิจ</div>
+                        <div class="card-subtitle">Economic Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>🌾 การพัฒนาเศรษฐกิจชายแดน</strong>
+                            โครงการเกษตรกรรมข้ามแดน, ส่งเสริมการค้า, สร้างโซนเศรษฐกิจพิเศษ
+                        </li>
+                        <li>
+                            <strong>🏗️ การลงทุนร่วม</strong>
+                            โครงการโครงสร้างพื้นฐาน, พัฒนาการท่องเที่ยว, แบ่งปันทรัพยากร
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon social">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขทางสังคม</div>
+                        <div class="card-subtitle">Social Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>🎓 การแลกเปลี่ยนวัฒนธรรม</strong>
+                            แลกเปลี่ยนนักศึกษา, เทศกาลวัฒนธรรมร่วม, เรียนรู้ภาษา
+                        </li>
+                        <li>
+                            <strong>🏥 ความร่วมมือสาธารณสุข</strong>
+                            การแพทย์ข้ามแดน, ป้องกันโรคระบาด, แบ่งปันความรู้
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon technical">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขทางเทคนิค</div>
+                        <div class="card-subtitle">Technical Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>🛰️ เทคโนโลยีสมัยใหม่</strong>
+                            ใช้ GPS และดาวเทียม, ระบบเฝ้าระวังอัจฉริยะ, วิเคราะห์ข้อมูลด้วย AI
+                        </li>
+                        <li>
+                            <strong>📡 ระบบสื่อสาร</strong>
+                            ศูนย์สื่อสารร่วม, ระบบแจ้งเตือนภัย, ประสานงานแบบเรียลไทม์
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon legal">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขทางกฎหมาย</div>
+                        <div class="card-subtitle">Legal Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>📜 กรอบกฎหมายใหม่</strong>
+                            ปรับปรุงกฎหมายข้ามแดน, ข้อตกลงการค้า, สนธิสัญญาใหม่
+                        </li>
+                        <li>
+                            <strong>🏛️ กลไกการบังคับใช้</strong>
+                            ศาลระหว่างประเทศ, กระบวนการอนุญาโตตุลาการ, ระบบติดตาม
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <div class="card-icon sustainable">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div>
+                        <div class="card-title">การแก้ไขเพื่อความยั่งยืน</div>
+                        <div class="card-subtitle">Sustainable Solutions</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul class="solution-list">
+                        <li>
+                            <strong>🌍 การอนุรักษ์สิ่งแวดล้อม</strong>
+                            โครงการป่าไผ่ข้ามแดน, จัดการทรัพยากรน้ำ, ป้องกันการขุดผิดกฎหมาย
+                        </li>
+                        <li>
+                            <strong>👨‍👩‍👧‍👦 การพัฒนาชุมชน</strong>
+                            ยกระดับคุณภาพชีวิต, สร้างความเข้าใจ, พัฒนาทักษะอาชีพ
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <h2>🎯 แผนการดำเนินการ</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <h3>📅 ระยะสั้น (1-2 ปี)</h3>
+                    <ul>
+                        <li>จัดตั้งคณะกรรมการร่วมระดับรัฐมนตรี</li>
+                        <li>เริ่มโครงการสำรวจเขตแดนด้วยเทคโนโลยี</li>
+                        <li>เปิดช่องทางสื่อสารตรงระหว่างหน่วยงาน</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>📅 ระยะกลาง (3-5 ปี)</h3>
+                    <ul>
+                        <li>ลงนามในข้อตกลงกรอบความร่วมมือ</li>
+                        <li>เริ่มโครงการพัฒนาเศรษฐกิจชายแดน</li>
+                        <li>สร้างศูนย์ประสานงานชายแดนร่วม</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>📅 ระยะยาว (5-10 ปี)</h3>
+                    <ul>
+                        <li>ประเมินผลและปรับปรุงแผนงาน</li>
+                        <li>ขยายความร่วมมือไปยังด้านอื่น ๆ</li>
+                        <li>สร้างแบบอย่างสำหรับภูมิภาค</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🌟 <strong>แผนผังความคิดนี้เป็นข้อเสนอแนะเพื่อการแก้ไขปัญหาชายแดนไทย-กัมพูชาอย่างสร้างสรรค์และยั่งยืน</strong></p>
+            <p>โดยเน้นการดำเนินงานในหลายมิติพร้อมกัน เพื่อให้เกิดผลลัพธ์ที่ดีที่สุดสำหรับทั้งสองประเทศ</p>
+        </div>
+    </div>
+
+    <div class="floating-btn" onclick="window.print()">
+        <i class="fas fa-print"></i>
+    </div>
+
+    <script>
+        function toggleCard(card) {
+            const content = card.querySelector('.card-content');
+            const allContents = document.querySelectorAll('.card-content');
+            
+            // ปิดการ์ดอื่น ๆ
+            allContents.forEach(c => {
+                if (c !== content) {
+                    c.classList.remove('active');
+                }
+            });
+            
+            // เปิด/ปิดการ์ดที่คลิก
+            content.classList.toggle('active');
+        }
+
+        // เปิดการ์ดแรกเมื่อโหลดหน้า
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCard = document.querySelector('.solution-card');
+            if (firstCard) {
+                toggleCard(firstCard);
+            }
+        });
+
+        // เพิ่มเอฟเฟกต์เลื่อนหน้า
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.solution-card');
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible) {
+                    card.style.animationDelay = (index * 0.1) + 's';
+                    card.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
